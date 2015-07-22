@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="bitApp">
 <head>
   <meta charset="utf-8">
   <title>myApp</title>
@@ -11,15 +11,22 @@
   -->
 
 </head>
-<body>
+<body ng-controller="ColorPickerController">
 
-  <h1>Hello World!</h1>
+  <color-picker-component></color-picker-component>
+
+
+
+
 
   <!-- 3rd-Party Libs -->
   <script src="bower_components/angular/angular.js"></script>
 
   <!-- Application Files -->
-
+  <script src="scripts/app.js"></script>
+  <script src="scripts/directives/colorPicker.js"></script>
+  <script src="scripts/directives/colorPickerComponent.js"></script>
+  <script src="scripts/controllers/ColorPickerController.js"></script>
 
 </body>
 </html>
