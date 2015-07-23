@@ -11,13 +11,12 @@
         };
     });
 
-    function BookDetailsComponentController() {
-        this.book = {
-            title: 'Angular 2 for Beginners',
-            author: 'foo',
-            isbn: 'bit-123-123',
-            numPages: 300
-        };
+    function BookDetailsComponentController(bookDataService, $routeParams) {
+        var self = this;
+
+        bookDataService.getByIsbn($routeParams.isbn).then(function(response) {
+            self.book = response.data;
+        });
     }
 
 })(angular.module('bitApp'));
