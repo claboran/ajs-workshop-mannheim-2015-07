@@ -42,6 +42,8 @@ describe('Service bookDataService', function() {
             var array1 = bookDataService.getAll(),
                 array2 = bookDataService.getAll();
 
+            expect(angular.isArray(array1)).toBe(true);
+            expect(angular.isArray(array2)).toBe(true);
             expect(array1).not.toBe(array2);
             expect(array1).toEqual(array2);
         });
