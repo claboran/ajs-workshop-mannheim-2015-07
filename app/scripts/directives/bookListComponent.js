@@ -14,6 +14,7 @@
     function BookListComponentController(bookDataService) {
         var self = this;
         bookDataService.getAll().then(function(response) {
+            console.log('books', response.data);
             self.books = response.data;
         });
     }

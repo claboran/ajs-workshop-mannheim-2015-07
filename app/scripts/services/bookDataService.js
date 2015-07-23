@@ -1,10 +1,11 @@
-angular.module('bitApp').factory('bookDataService', function($q, $filter) {
+(function(m) {
 
-    // private state
+    m.service('bookDataService', BookDataService);
 
-    var filter = $filter('filter');
-
-    var _books = [
+    var _$q,
+        _dataEnhancer,
+        _filter,
+        _books = [
         {
             title: 'Angular 2 for Beginners',
             author: 'foo',
@@ -25,14 +26,36 @@ angular.module('bitApp').factory('bookDataService', function($q, $filter) {
         }
     ];
 
-    // private impl.
-    function _getAll() {
-        return $q.when({
-            data: angular.copy(_books)
-        });
+    function BookDataService($q, $filter, dataEnhancer) {
+        _$q = $q;
+        _filter = $filter('filter');
+        _dataEnhancer = dataEnhancer;
     }
 
-    function _getByIsbnES5ArrayFilter(isbn) {
+    BookDataService.prototype.getAll = function() {
+        return _$q.when({
+            data: angular.copy(_books)
+        }).then(function(response) {
+            response.data.forEach(function(b) {
+                _dataEnhancer.enhance(b);
+            });
+
+            return response;
+        });
+    };
+
+    BookDataService.prototype.getByIsbn = function(isbn) {
+        var result = _filter(_books, {isbn: isbn});
+
+        var book = null;
+        if (result.length > 0) {
+            book = result[0];
+        }
+
+        return _$q.when({data: book});
+    };
+
+    BookDataService.prototype.getByIsbnES5ArrayFilter = function(isbn) {
         var filtered = _books.filter(function(b) {
             return b.isbn === isbn;
         });
@@ -42,23 +65,7 @@ angular.module('bitApp').factory('bookDataService', function($q, $filter) {
             result = filtered[0];
         }
 
-        return $q.when({data: result});
-    }
-
-    function _getByIsbn(isbn) {
-        var result = filter(_books, {isbn: isbn});
-
-        var book = null;
-        if (result.length > 0) {
-            book = result[0];
-        }
-
-        return $q.when({data: book});
-    }
-
-    // revealing module
-    return {
-        getAll: _getAll,
-        getByIsbn: _getByIsbn
+        return _$q.when({data: result});
     };
-});
+
+})(angular.module('bitApp'));

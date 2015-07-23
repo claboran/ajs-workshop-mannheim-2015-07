@@ -10,6 +10,13 @@ describe('Service bookDataService', function() {
 
     beforeEach(module('bitApp'));
     beforeEach(module('testHelper'));
+    beforeEach(module('testMocks'));
+
+    beforeEach(module(function($provide, mockDataEnhancerProvider) {
+        // config block
+
+        $provide.factory('dataEnhancer', mockDataEnhancerProvider.get());
+    }));
 
     beforeEach(inject(function(_$rootScope_, _bookDataService_, bookDataServiceHelper) {
         $rootScope = _$rootScope_;
@@ -48,6 +55,13 @@ describe('Service bookDataService', function() {
             expect(angular.isArray(array2)).toBe(true);
             expect(array1).not.toBe(array2);
             expect(array1).toEqual(array2);
+        });
+
+        it('should return an enhanced result', function() {
+            var books = getAllBooksSync($rootScope, bookDataService);
+            books.forEach(function(b) {
+                expect(b.enhanced).toBe('p0wned!');
+            });
         });
     });
 
