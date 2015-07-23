@@ -11,11 +11,10 @@ describe('Service bookDataService', function() {
     beforeEach(module('bitApp'));
     beforeEach(module('testHelper'));
     beforeEach(module('testMocks'));
-
     beforeEach(module(function($provide, mockDataEnhancerProvider) {
         // config block
 
-        $provide.factory('dataEnhancer', mockDataEnhancerProvider.get());
+        $provide.factory('dataEnhancer', mockDataEnhancerProvider.$get);
     }));
 
     beforeEach(inject(function(_$rootScope_, _bookDataService_, bookDataServiceHelper) {
