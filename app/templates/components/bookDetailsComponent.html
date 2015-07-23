@@ -1,5 +1,13 @@
 <div class="row">
     <div class="col-xs-12">
-        <h1>Book Details</h1>
+        <h1 ng-bind="bookDetailsComponentCtrl.book.title"></h1>
+    </div>
+
+    <div class="col-xs-12">
+        <ul>
+            <li ng-bind-template="Author: {{ bookDetailsComponentCtrl.book.author }}"></li>
+            <li ng-bind-template="ISBN: {{ bookDetailsComponentCtrl.book.isbn }}"></li>
+            <li ng-bind-template="#Pages: {{ bookDetailsComponentCtrl.book.isbn }}"></li>
+        </ul>
     </div>
 </div>
