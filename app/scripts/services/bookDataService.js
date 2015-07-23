@@ -1,4 +1,4 @@
-angular.module('bitApp').factory('bookDataService', function() {
+angular.module('bitApp').factory('bookDataService', function($q) {
 
     // private state
     var _books = [
@@ -24,7 +24,9 @@ angular.module('bitApp').factory('bookDataService', function() {
 
     // private impl.
     function _getAll() {
-        return angular.copy(_books);
+        return $q.when({
+            data: angular.copy(_books)
+        });
     }
 
     // revealing module
