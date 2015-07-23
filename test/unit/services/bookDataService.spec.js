@@ -3,13 +3,18 @@
 describe('Service bookDataService', function() {
 
     var $rootScope,
-        bookDataService;
+        bookDataService,
+        isValidBook,
+        getAllBooksSync;
 
     beforeEach(module('bitApp'));
+    beforeEach(module('testHelper'));
 
-    beforeEach(inject(function(_$rootScope_, _bookDataService_) {
+    beforeEach(inject(function(_$rootScope_, _bookDataService_, bookDataServiceHelper) {
         $rootScope = _$rootScope_;
         bookDataService = _bookDataService_;
+        isValidBook = bookDataServiceHelper.isValidBook;
+        getAllBooksSync = bookDataServiceHelper.getAllBooksSync;
     }));
 
     it('should be defined', function() {
@@ -22,12 +27,7 @@ describe('Service bookDataService', function() {
         });
 
         it('should return an array of book objects', function() {
-            var actual;
-
-            bookDataService.getAll().then(function(response) {
-                actual = response.data;
-            });
-            $rootScope.$apply();
+            var actual = getAllBooksSync($rootScope, bookDataService);
 
             expect(angular.isArray(actual)).toBe(true);
 
@@ -39,8 +39,8 @@ describe('Service bookDataService', function() {
         });
 
         it('should return a copy of the internal array', function() {
-            var array1 = bookDataService.getAll(),
-                array2 = bookDataService.getAll();
+            var array1 = getAllBooksSync($rootScope, bookDataService),
+                array2 = getAllBooksSync($rootScope, bookDataService);
 
             expect(angular.isArray(array1)).toBe(true);
             expect(angular.isArray(array2)).toBe(true);
@@ -49,12 +49,8 @@ describe('Service bookDataService', function() {
         });
     });
 
-    function isValidBook(b) {
-        return angular.isDefined(b)
-                && angular.isString(b.title)
-                && angular.isString(b.author)
-                && angular.isString(b.isbn)
-                && angular.isNumber(b.numPages);
-    }
+
+
+
 
 });
