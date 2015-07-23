@@ -1,3 +1,3 @@
 "use strict";
 
-angular.module('bitApp', []);
+angular.module('bitApp', ['ngRoute']);
