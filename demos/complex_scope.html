@@ -20,9 +20,10 @@
     </p>
 
   </div>
+  <input type="text" ng-model="searchText">
   <div class="col-lg-6" >
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="item in list">{{ item }}</li>
+      <li class="list-group-item" ng-repeat="item in list | filter:searchText">{{ item }}</li>
     </ul>
   </div>
 </div>

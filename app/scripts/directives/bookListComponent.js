@@ -11,6 +11,27 @@
         };
     });
 
-    function BookListComponentController() {}
+    function BookListComponentController() {
+        this.books = [
+            {
+                title: 'Angular 2 for Beginners',
+                author: 'foo',
+                isbn: 'bit-123-123',
+                numPages: 300
+            },
+            {
+                title: 'EmberJS for Beginners',
+                author: 'bar',
+                isbn: 'bit-111-111',
+                numPages: 250
+            },
+            {
+                title: 'KnockoutJS for Beginners',
+                author: 'baz',
+                isbn: 'bit-222-222',
+                numPages: 220
+            }
+        ];
+    }
 
 })(angular.module('bitApp'));
