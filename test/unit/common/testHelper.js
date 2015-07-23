@@ -22,10 +22,22 @@
             return books;
         }
 
+        function _getBookByIsbnSync($rootScope, bookDataService, isbn) {
+            var book;
+
+            bookDataService.getByIsbn(isbn).then(function(response) {
+                book = response.data;
+            });
+            $rootScope.$apply();
+
+            return book;
+        }
+
         // revealing module
         return {
             isValidBook: _isValidBook,
-            getAllBooksSync: _getAllBooksSync
+            getAllBooksSync: _getAllBooksSync,
+            getBookByIsbnSync: _getBookByIsbnSync
         }
     });
 

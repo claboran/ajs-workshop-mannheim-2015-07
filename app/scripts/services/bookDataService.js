@@ -1,6 +1,9 @@
-angular.module('bitApp').factory('bookDataService', function($q) {
+angular.module('bitApp').factory('bookDataService', function($q, $filter) {
 
     // private state
+
+    var filter = $filter('filter');
+
     var _books = [
         {
             title: 'Angular 2 for Beginners',
@@ -29,8 +32,33 @@ angular.module('bitApp').factory('bookDataService', function($q) {
         });
     }
 
+    function _getByIsbnES5ArrayFilter(isbn) {
+        var filtered = _books.filter(function(b) {
+            return b.isbn === isbn;
+        });
+
+        var result = null;
+        if (filtered.length > 0) {
+            result = filtered[0];
+        }
+
+        return $q.when({data: result});
+    }
+
+    function _getByIsbn(isbn) {
+        var result = filter(_books, {isbn: isbn});
+
+        var book = null;
+        if (result.length > 0) {
+            book = result[0];
+        }
+
+        return $q.when({data: book});
+    }
+
     // revealing module
     return {
-        getAll: _getAll
+        getAll: _getAll,
+        getByIsbn: _getByIsbn
     };
 });

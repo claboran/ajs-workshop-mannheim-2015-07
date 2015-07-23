@@ -5,7 +5,8 @@ describe('Service bookDataService', function() {
     var $rootScope,
         bookDataService,
         isValidBook,
-        getAllBooksSync;
+        getAllBooksSync,
+        getBookByIsbnSync;
 
     beforeEach(module('bitApp'));
     beforeEach(module('testHelper'));
@@ -15,6 +16,7 @@ describe('Service bookDataService', function() {
         bookDataService = _bookDataService_;
         isValidBook = bookDataServiceHelper.isValidBook;
         getAllBooksSync = bookDataServiceHelper.getAllBooksSync;
+        getBookByIsbnSync = bookDataServiceHelper.getBookByIsbnSync;
     }));
 
     it('should be defined', function() {
@@ -49,8 +51,23 @@ describe('Service bookDataService', function() {
         });
     });
 
+    describe('getByIsbn()', function() {
+        it('should be a defined function', function() {
+            expect(angular.isFunction(bookDataService.getByIsbn)).toBe(true);
+        });
 
+        it('should return a valid book object if an available isbn is passed', function() {
+            var isbn = 'bit-123-123';
+            var book = getBookByIsbnSync($rootScope, bookDataService, isbn);
+            expect(isValidBook(book)).toBe(true);
+            expect(book.isbn).toBe(isbn);
+        });
 
-
+        it('should return null if a not available isbn is passed', function() {
+            var isbn = 'test';
+            var book = getBookByIsbnSync($rootScope, bookDataService, isbn);
+            expect(book).toBeNull();
+        });
+    });
 
 });
