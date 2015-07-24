@@ -1,25 +1,27 @@
 "use strict";
 
+var BookListPage = require('../page-objects/book-list');
 
 describe('Book list view', function() {
 
+    var bookListPage;
+
     beforeEach(function() {
-        browser.get('http://localhost:8080/#/books');
+        bookListPage = new BookListPage();
+        bookListPage.open();
     });
 
     it('should show the proper heading', function() {
-        var h1 = element(by.css('h1'));
+        var h1 = bookListPage.getHeading();
         expect(h1.getText()).toBe('Book List');
     });
 
     it('should have three book entries', function() {
-        var bookList = element.all(by.repeater('book in bookListComponentCtrl.books'));
-        expect(bookList.count()).toBe(3);
+        expect(bookListPage.getBookCount()).toBe(3);
 
-        var searchTextInput = element(by.model('searchText'));
-        searchTextInput.sendKeys('coffeescript');
+        bookListPage.search('coffeescript');
 
-        expect(bookList.count()).toBe(1);
+        expect(bookListPage.getBookCount()).toBe(1);
     });
 
 });
