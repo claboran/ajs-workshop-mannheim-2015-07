@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     ngAnnotate = require('gulp-ng-annotate'),
     uglify = require('gulp-uglify'),
     clean = require('gulp-clean'),
+    naturalSort = require('gulp-natural-sort'),
     inject = require('gulp-inject'),
     concat = require('gulp-concat');
 
@@ -12,6 +13,7 @@ var gulp = require('gulp'),
 
 gulp.task('js:compile', function() {
     return gulp.src('./app/scripts/**/*.js')
+        .pipe(naturalSort())
         .pipe(angularFilesort())
         .pipe(concat('all.js'))
         .pipe(ngAnnotate())
