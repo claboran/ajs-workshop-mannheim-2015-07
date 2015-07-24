@@ -33,4 +33,25 @@ describe('Directive messageDialog', function() {
         expect(jqElem.find('div.title').text()).toBe(parentScope.ctrl.dialogTitle.toUpperCase());
     });
 
+    it('should properly invoke the passed onYes function', function() {
+        var parentScope = $rootScope.$new();
+
+        parentScope.ctrl = {
+            performDeletion: function() {}
+        };
+        spyOn(parentScope.ctrl, 'performDeletion');
+
+        var scopeLinkingFn = $compile(usageTemplate);
+        var jqElem = scopeLinkingFn(parentScope);
+        parentScope.$apply();
+
+        var directiveScope = getDirectiveScope(jqElem);
+        directiveScope.messageDialogCtrl.onYes();
+        expect(parentScope.ctrl.performDeletion).toHaveBeenCalled();
+    });
+
+    function getDirectiveScope(jqElem) {
+        return jqElem.children().first().scope();
+    }
+
 });
