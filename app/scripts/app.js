@@ -1,3 +1,3 @@
 "use strict";
 
-angular.module('bitApp', ['ngRoute']);
+angular.module('bitApp', ['ngRoute', 'angular-jwt']);

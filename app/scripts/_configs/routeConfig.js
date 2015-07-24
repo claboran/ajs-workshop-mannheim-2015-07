@@ -8,6 +8,8 @@ angular.module('bitApp').config(function($routeProvider) {
         template: '<book-details-component></book-details-component>'
     }).when('/new-book', {
         template: '<new-book-component></new-book-component>'
+    }).when('/login', {
+        template: '<login-component></login-component>'
     }).otherwise({
         redirectTo: '/'
     });

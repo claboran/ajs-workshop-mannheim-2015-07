@@ -24,7 +24,8 @@ gulp.task('js:compile', function() {
 gulp.task('vendorJs:concat', function() {
     return gulp.src([
         'app/bower_components/angular/angular.min.js',
-        'app/bower_components/angular-route/angular-route.min.js'
+        'app/bower_components/angular-route/angular-route.min.js',
+        'app/bower_components/angular-jwt/dist/angular-jwt.min.js'
     ])
         .pipe(concat('vendor.min.js'))
         .pipe(gulp.dest('./dist/vendor/'))
