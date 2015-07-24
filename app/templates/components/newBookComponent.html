@@ -2,4 +2,24 @@
     <div class="col-xs-12">
         <h1>New Book</h1>
     </div>
+
+    <div class="col-xs-12">
+        <form name="newBookComponentCtrl.bookForm" novalidate>
+            <input type="text" name="title" ng-model="newBookComponentCtrl.book.title" required>
+            <input type="text" name="author" ng-model="newBookComponentCtrl.book.author" required>
+            <input type="text" name="isbn" ng-model="newBookComponentCtrl.book.isbn" validate-isbn required>
+            <input type="number" name="numPages" ng-model="newBookComponentCtrl.book.numPages" required>
+
+            <button ng-disabled="newBookComponentCtrl.bookForm.$invalid"
+                    ng-click="newBookComponentCtrl.saveBook(newBookComponentCtrl.book)">
+                Save Book
+            </button>
+        </form>
+    </div>
+
+    <div class="col-xs-12">
+        <span ng-show="newBookComponentCtrl.bookForm.isbn.$dirty && newBookComponentCtrl.bookForm.isbn.$error.isbn">
+            Bitte geben Sie eine valide bit-ISBN ein.
+        </span>
+    </div>
 </div>

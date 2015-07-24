@@ -11,6 +11,19 @@
         };
     });
 
-    function NewBookComponentController() {}
+    var _$location, _bookDataService;
+
+    function NewBookComponentController($location, bookDataService) {
+        _$location = $location;
+        _bookDataService = bookDataService;
+    }
+
+    NewBookComponentController.prototype.saveBook = function(book) {
+        _bookDataService.storeBook(book).then(function(response) {
+            if (response.data) {
+                _$location.path('/books');
+            }
+        });
+    };
 
 })(angular.module('bitApp'));

@@ -1,6 +1,36 @@
 (function(m) {
 
+
     m.service('bookDataService', BookDataService);
+
+    var baseUrl = 'http://ajs-workshop.herokuapp.com/api';
+    var _$http;
+
+    function BookDataService($http) {
+        _$http = $http;
+    }
+
+    BookDataService.prototype.getAll = function() {
+        return _$http.get(baseUrl + '/books');
+    };
+
+    BookDataService.prototype.getByIsbn = function(isbn) {
+        return _$http.get(baseUrl + '/books/' + isbn);
+    };
+
+    BookDataService.prototype.deleteByIsbn = function(isbn) {
+        return _$http.delete(baseUrl + '/books/' + isbn);
+    };
+
+    BookDataService.prototype.storeBook = function(book) {
+        return _$http.post(baseUrl + '/books', book);
+    };
+
+
+
+
+
+    m.service('staticBookDataService', StaticBookDataService);
 
     var _$q,
         _dataEnhancer,
@@ -26,13 +56,13 @@
         }
     ];
 
-    function BookDataService($q, $filter, dataEnhancer) {
+    function StaticBookDataService($q, $filter, dataEnhancer) {
         _$q = $q;
         _filter = $filter('filter');
         _dataEnhancer = dataEnhancer;
     }
 
-    BookDataService.prototype.getAll = function() {
+    StaticBookDataService.prototype.getAll = function() {
         return _$q.when({
             data: angular.copy(_books)
         }).then(function(response) {
@@ -44,7 +74,7 @@
         });
     };
 
-    BookDataService.prototype.getByIsbn = function(isbn) {
+    StaticBookDataService.prototype.getByIsbn = function(isbn) {
         var result = _filter(_books, {isbn: isbn});
 
         var book = null;
@@ -55,7 +85,7 @@
         return _$q.when({data: book});
     };
 
-    BookDataService.prototype.getByIsbnES5ArrayFilter = function(isbn) {
+    StaticBookDataService.prototype.getByIsbnES5ArrayFilter = function(isbn) {
         var filtered = _books.filter(function(b) {
             return b.isbn === isbn;
         });
@@ -68,7 +98,7 @@
         return _$q.when({data: result});
     };
 
-    BookDataService.prototype.deleteByIsbn = function(isbn) {
+    StaticBookDataService.prototype.deleteByIsbn = function(isbn) {
         var indexToDelete = -1;
         var i = _books.length;
         while (i--) {
@@ -85,5 +115,10 @@
             return _$q.when({data: false});
         }
     };
+
+    StaticBookDataService.prototype.storeBook = function(book) {
+        _books.push(book);
+        return _$q.when({data: true});
+    }
 
 })(angular.module('bitApp'));
