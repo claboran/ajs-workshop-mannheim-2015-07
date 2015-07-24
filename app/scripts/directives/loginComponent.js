@@ -22,7 +22,7 @@
         _authService.login(credentials).then(function(response) {
             console.log('auth successful', response.data.token);
             localStorage.setItem('id_token', response.data.token);
-            $location.path('/books');
+            _$location.path('/books');
         }).catch(function(error) {
             console.log('error during authentication', error);
         });
