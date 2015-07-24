@@ -13,6 +13,7 @@
                 <tr>
                     <th>Title</th>
                     <th>ISBN</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
 
@@ -20,8 +21,25 @@
                 <tr ng-repeat="book in bookListComponentCtrl.books | filter:searchText">
                     <td><a ng-href="#/books/{{ book.isbn }}" ng-bind="book.title | truncate:10:'...' | uppercase"></a></td>
                     <td ng-bind="book.isbn"></td>
+                    <td><button ng-click="bookListComponentCtrl.deleteBook(book)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<message-dialog visible="bookListComponentCtrl.dialogVisible"
+                title="bookListComponentCtrl.dialogTitle"
+                on-yes="bookListComponentCtrl.performDeletion()"
+                on-no="bookListComponentCtrl.cancelDeletion()">
+    Wollen Sie das Buch {{ bookListComponentCtrl.bookToDelete.title }} wirklich löschen?
+</message-dialog>
+
+<div class="overlay">
+    <div class="dialog">
+        <div class="title">TITLE</div>
+        <div class="content">CONTENT</div>
+        <button class="action-button">YES</button>
+        <button class="action-button">NO</button>
     </div>
 </div>

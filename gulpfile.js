@@ -30,9 +30,14 @@ gulp.task('vendorJs:concat', function() {
         .pipe(gulp.dest('./dist/vendor/'))
 });
 
-gulp.task('css:copy', function() {
+gulp.task('vendorCss:copy', function() {
     return gulp.src('app/bower_components/bootstrap/dist/css/bootstrap.min.css')
         .pipe(gulp.dest('./dist/vendor'))
+});
+
+gulp.task('css:copy', function() {
+    return gulp.src('app/styles/main.css')
+        .pipe(gulp.dest('./dist/'))
 });
 
 gulp.task('templates:copy', function() {
@@ -45,11 +50,11 @@ gulp.task('clean', function () {
         .pipe(clean());
 });
 
-gulp.task('build', ['vendorJs:concat', 'js:compile', 'css:copy', 'templates:copy'], function() {
+gulp.task('build', ['vendorJs:concat', 'js:compile', 'vendorCss:copy', 'css:copy', 'templates:copy'], function() {
 
     var target = gulp.src('./app/index.html');
     var sources = gulp.src([
-        './dist/vendor/*.{js,css}', './dist/all.js'
+        './dist/vendor/*.{js,css}', './dist/all.js', './dist/main.css'
     ], {read: false});
 
     return target.pipe(inject(sources, {ignorePath: 'dist/', addRootSlash: false}))
