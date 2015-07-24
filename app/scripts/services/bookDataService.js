@@ -68,4 +68,22 @@
         return _$q.when({data: result});
     };
 
+    BookDataService.prototype.deleteByIsbn = function(isbn) {
+        var indexToDelete = -1;
+        var i = _books.length;
+        while (i--) {
+            if (isbn === _books[i].isbn) {
+                indexToDelete = i;
+                break;
+            }
+        }
+
+        if (indexToDelete != -1) {
+            _books.splice(indexToDelete, 1);
+            return _$q.when({data: true});
+        } else {
+            return _$q.when({data: false});
+        }
+    };
+
 })(angular.module('bitApp'));
